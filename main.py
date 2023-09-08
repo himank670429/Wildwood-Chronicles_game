@@ -2,9 +2,11 @@ import pygame as pg
 
 # local modules
 from config import *
-from modules.SceneManager import SceneManager
+from Modules.SceneManager import SceneManager
 from Scene.MainMenu import MainMenu
 from Scene.SettingsMenu import SettingsMenu
+from Scene.GameScene import GameScene
+from Modules.Map import Map
 
 class Game:
     def __init__(self):
@@ -21,20 +23,24 @@ class Game:
         self.clock = pg.time.Clock()
         self.global_state = {
             'Music' : False,
-            'Sound' : False
+            'Sound' : False,
+            'Pause' : False
         }
-
+        self.walls = pg.sprite.Group()
+        self.map = Map(self)
+        
         self.scenes = {
             "MainMenu" : MainMenu(self),
-            "SettingsMenu" : SettingsMenu(self)
+            "SettingsMenu" : SettingsMenu(self),
+            "GameScene" : GameScene(self)
         }
-        self.scene_manager = SceneManager(self, self.scenes["MainMenu"])
+        
+        self.scene_manager = SceneManager(self, self.scenes["GameScene"])
 
-    
     def run(self):
         self.running = True
         while self.running:
-            self.dt = 1000/self.clock.tick(FPS)
+            self.dt = self.clock.tick(FPS)/1000.0
             self.events()
             self.draw()
             self.update()
@@ -45,8 +51,6 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.scene_manager.draw_scene()
-        # pg.draw.line(self.screen, (255, 0, 0), (WIDTH/2, 0), (WIDTH/2, HEIGHT))
-        # pg.draw.line(self.screen, (255, 0, 0), (0, HEIGHT/2), (WIDTH, HEIGHT/2))
     
     def update(self):
         self.scene_manager.update_scene()

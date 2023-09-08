@@ -1,4 +1,4 @@
-from modules.SceneManager import Scene
+from Modules.SceneManager import Scene
 import pygame as pg
 from config import *
 from UI.Button import Button
@@ -11,6 +11,7 @@ class SettingsMenu(Scene):
         self.UI = [
             Button(
                 self.game,
+                self.game.screen,
                 self._settings,
                 30, 30,
                 140, 50,
@@ -21,6 +22,7 @@ class SettingsMenu(Scene):
             ),
             Text(
                 self.game, 
+                self.game.screen,
                 'Music : ',
                 200, 200,
                 font_size = 50,
@@ -28,12 +30,14 @@ class SettingsMenu(Scene):
             ),
             ToggleButton(
                 self.game, 
+                self.game.screen,
                 'Music',
                 200, 200,
                 align= 'leftcenter'
             ),
             Text(
                 self.game,
+                self.game.screen,
                 'Sound : ',
                 200, 260,
                 font_size = 50,
@@ -41,6 +45,7 @@ class SettingsMenu(Scene):
             ),
             ToggleButton(
                 self.game, 
+                self.game.screen,
                 'Sound',
                 200, 260,
                 align= 'leftcenter'

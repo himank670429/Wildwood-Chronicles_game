@@ -1,4 +1,4 @@
-from modules.SceneManager import Scene
+from Modules.SceneManager import Scene
 from UI.Button import Button
 from UI.Text import Text
 from config import *
@@ -9,6 +9,7 @@ class MainMenu(Scene):
         self.UI = [
             Button(
                 self.game,
+                self.game.screen,
                 self._resume_game,
                 WIDTH-70,HEIGHT-280,
                 140, 50,
@@ -19,6 +20,7 @@ class MainMenu(Scene):
             ),
             Button(
                 self.game,
+                self.game.screen,
                 self._resume_game,
                 WIDTH-70,HEIGHT-210,
                 140, 50,
@@ -29,6 +31,7 @@ class MainMenu(Scene):
             ),
             Button(
                 self.game,
+                self.game.screen,
                 self._settings,
                 WIDTH-70,HEIGHT-140,
                 140, 50,
@@ -39,6 +42,7 @@ class MainMenu(Scene):
             ),
             Button(
                 self.game,
+                self.game.screen,
                 self._quit,
                 WIDTH-70,HEIGHT-70,
                 140, 50,
@@ -49,6 +53,7 @@ class MainMenu(Scene):
             ),
             Text(
                 self.game,
+                self.game.screen,
                 'Wildwood Chronicles',
                 20, 60,
                 font_size = 70,
@@ -56,6 +61,7 @@ class MainMenu(Scene):
             ),
             Text(
                 self.game,
+                self.game.screen,
                 'The Unseen Realm',
                 30, 130,
                 font_size = 40,
@@ -64,7 +70,7 @@ class MainMenu(Scene):
         ]
     
     def _play_game(self):
-        print('play')
+        self.game.scene_manager.set_scene(self.game.scenes['GameScene'])
     
     def _settings(self):
         self.game.scene_manager.set_scene(self.game.scenes['SettingsMenu'])

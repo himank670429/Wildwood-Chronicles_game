@@ -1,7 +1,9 @@
 import pygame as pg
 class Text(pg.sprite.Sprite):
-    def __init__(self, game, text, x, y, font_face = None, font_size = 20, font_color = (255, 255, 255), align = 'topleft'):
+    def __init__(self, game, render_surf, text, x, y, font_face = None, font_size = 20, font_color = (255, 255, 255), align = 'topleft', tag = ''):
         self.game = game
+        self.render_surf = render_surf
+        self.tag = tag
         self.text = text
         self.font_face = font_face
         self.font_size = font_size
@@ -32,7 +34,7 @@ class Text(pg.sprite.Sprite):
             raise Exception('invalid alignment specified')
     
     def draw(self):
-        self.game.screen.blit(self.text_surf, self.text_rect)
+        self.render_surf.blit(self.text_surf, self.text_rect)
     
     def mouse_collide(self):
         return False

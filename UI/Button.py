@@ -1,12 +1,13 @@
 import pygame as pg
 class Button(pg.sprite.Sprite):
-    def __init__(self, game, callback, x, y, width, height, text, font_face = None, font_size = 10, font_color = (255, 255,255), align = 'topleft',  fill = (255, 255, 255)):
+    def __init__(self, game, render_surf, callback, x, y, width, height, text, font_face = None, font_size = 10, font_color = (255, 255,255), align = 'topleft',  fill = (255, 255, 255), tag = ''):
         self.game = game
+        self.render_surf = render_surf
+        self.tag = tag
         self.callback = callback if callback else self._default_callback
         self.image = pg.Surface((width,height))
         self.image.fill(fill) if fill else None
         self.rect = self.image.get_rect()
-        
         if align == 'topleft': self.rect.topleft = x, y
         elif align == 'bottomleft': self.rect.bottomleft = x, y
         elif align == 'topright': self.rect.topright = x, y
@@ -41,7 +42,7 @@ class Button(pg.sprite.Sprite):
             self.image.get_width()/2 - text_surf.get_width()/2,
             self.image.get_height()/2 - text_surf.get_height()/2,
         ))
-        self.game.screen.blit(self.image, self.rect)
+        self.render_surf.blit(self.image, self.rect)
     
     def mouse_collide(self):
         return self.rect.collidepoint(pg.mouse.get_pos())

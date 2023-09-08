@@ -1,7 +1,9 @@
 import pygame as pg
 class ToggleButton(pg.sprite.Sprite):
-    def __init__(self, game, state_name, x, y, align = 'topleft'):
+    def __init__(self, game, render_surf, state_name, x, y, align = 'topleft', tag = ''):
         self.game = game
+        self.render_surf = render_surf
+        self.tag = tag
         self.state_name = state_name
         self.image = pg.Surface((70, 30))
         self.thumb = pg.Surface((26, 26))
@@ -49,7 +51,7 @@ class ToggleButton(pg.sprite.Sprite):
                 self.image.get_height()/2 - self.thumb.get_height()/2
             ))
         
-        self.game.screen.blit(self.image, self.rect)
+        self.render_surf.blit(self.image, self.rect)
 
     def toggle(self):
         self.game.global_state[self.state_name] = not self.game.global_state[self.state_name]
