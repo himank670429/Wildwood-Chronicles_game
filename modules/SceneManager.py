@@ -4,6 +4,11 @@ class Scene(ABC):
     every scene has some actor that are going to be drawn, updated on the screen.
     these Scene are creates seperatley in Scene folder.
     '''
+    @abstractmethod
+    def inilialize(self):
+        '''
+        spawn entities game object 
+        '''
 
     @abstractmethod
     def draw(self):
@@ -34,8 +39,12 @@ class SceneManager():
         self.current_scene = current_scene
         self.game = game
     
+    def initialize_scene(self):
+        self.current_scene.inilialize()
+    
     def set_scene(self, scene : Scene):
         self.current_scene = scene
+        self.current_scene.inilialize()
     
     def draw_scene(self):
         self.current_scene.draw()

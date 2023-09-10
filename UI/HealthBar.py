@@ -1,12 +1,17 @@
 from pygame.sprite import Sprite
-class Button(Sprite):
-    def __init__(self, game, render_surf, callback, x, y, width, height, text, font_face = None, font_size = 10, font_color = (255, 255,255), align = 'topleft',  fill = (255, 255, 255), tag = ''):
+class HealthBar(Sprite):
+    def __init__(self, game, enitity, render_surf, x, y, width, height, align = 'topleft'):
         self.game = game
+        self.entity = enitity
         self.render_surf = render_surf
-        self.tag = tag
-        self.callback = callback if callback else self._default_callback
-        self.image = self.game.pg.Surface((width,height))
-        self.image.fill(fill) if fill else None
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+
+        self.image = self.game.pg.Surface((width, height))
+        self.image.fill((255, 0, 0))
         self.rect = self.image.get_rect()
         if align == 'topleft': self.rect.topleft = x, y
         elif align == 'bottomleft': self.rect.bottomleft = x, y
@@ -28,21 +33,16 @@ class Button(Sprite):
         else:
             raise Exception('invalid alignment specified')
 
-        self.text = text
-        self.font_color = font_color
-
-        self.font = self.game.pg.font.Font(font_face, font_size)
-
-    def _default_callback(self):
-        pass
-
+        self.fill_image = self.game.pg.Surface((width * (self.entity.health/self.entity.max_health), height))
+        self.fill_image.fill((0, 255, 0))
+    
     def draw(self):
-        text_surf = self.font.render(self.text, True, self.font_color)
-        self.image.blit(text_surf, (
-            self.image.get_width()/2 - text_surf.get_width()/2,
-            self.image.get_height()/2 - text_surf.get_height()/2,
-        ))
+        self.image.fill((255, 0, 0))
+        self.image.blit(self.fill_image, (0,0))
         self.render_surf.blit(self.image, self.rect)
     
+    def update(self):
+        self.fill_image = self.game.pg.transform.scale(self.fill_image, (self.width * ((self.entity.health/self.entity.max_health)), self.height))
+    
     def mouse_collide(self):
-        return self.rect.collidepoint(self.game.pg.mouse.get_pos())
+        pass

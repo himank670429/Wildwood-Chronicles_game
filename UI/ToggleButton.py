@@ -1,12 +1,12 @@
-import pygame as pg
-class ToggleButton(pg.sprite.Sprite):
+from pygame.sprite import Sprite
+class ToggleButton(Sprite):
     def __init__(self, game, render_surf, state_name, x, y, align = 'topleft', tag = ''):
         self.game = game
         self.render_surf = render_surf
         self.tag = tag
         self.state_name = state_name
-        self.image = pg.Surface((70, 30))
-        self.thumb = pg.Surface((26, 26))
+        self.image = self.game.pg.Surface((70, 30))
+        self.thumb = self.game.pg.Surface((26, 26))
         self.thumb.fill((200, 200, 200))
         self.rect = self.image.get_rect()
         self.thumb_rect = self.thumb.get_rect()
@@ -57,5 +57,5 @@ class ToggleButton(pg.sprite.Sprite):
         self.game.global_state[self.state_name] = not self.game.global_state[self.state_name]
 
     def mouse_collide(self):
-        return self.rect.collidepoint(pg.mouse.get_pos())
+        return self.rect.collidepoint(self.game.pg.mouse.get_pos())
 

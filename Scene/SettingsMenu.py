@@ -1,5 +1,4 @@
 from Modules.SceneManager import Scene
-import pygame as pg
 from config import *
 from UI.Button import Button
 from UI.ToggleButton import ToggleButton
@@ -8,6 +7,8 @@ from UI.Text import Text
 class SettingsMenu(Scene):
     def __init__(self, game):
         self.game = game
+    
+    def inilialize(self):
         self.UI = [
             Button(
                 self.game,
@@ -56,7 +57,7 @@ class SettingsMenu(Scene):
         self.game.scene_manager.set_scene(self.game.scenes['MainMenu'])
 
     def _quit(self):
-        pg.quit()
+        self.game.pg.quit()
         exit()
 
     def draw(self):
@@ -64,10 +65,10 @@ class SettingsMenu(Scene):
             ui.draw()
 
     def events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in self.game.pg.event.get():
+            if event.type == self.game.pg.QUIT:
                 self._quit()
-            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == self.game.pg.MOUSEBUTTONDOWN and event.button == 1:
                 for ui in self.UI:
                     if ui.mouse_collide(): ui.callback()
 

@@ -1,5 +1,5 @@
-import pygame as pg
-class Text(pg.sprite.Sprite):
+from pygame.sprite import Sprite
+class Text(Sprite):
     def __init__(self, game, render_surf, text, x, y, font_face = None, font_size = 20, font_color = (255, 255, 255), align = 'topleft', tag = ''):
         self.game = game
         self.render_surf = render_surf
@@ -9,7 +9,7 @@ class Text(pg.sprite.Sprite):
         self.font_size = font_size
         self.font_color = font_color
 
-        self.font = pg.font.Font(font_face, font_size)
+        self.font = self.game.pg.font.Font(font_face, font_size)
         self.text_surf = self.font.render(text, True, font_color)
         self.text_rect = self.text_surf.get_rect()
 
@@ -33,6 +33,9 @@ class Text(pg.sprite.Sprite):
         else:
             raise Exception('invalid alignment specified')
     
+    def set_text(self, text):
+        self.text = text
+
     def draw(self):
         self.render_surf.blit(self.text_surf, self.text_rect)
     

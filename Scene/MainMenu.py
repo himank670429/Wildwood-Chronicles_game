@@ -2,10 +2,11 @@ from Modules.SceneManager import Scene
 from UI.Button import Button
 from UI.Text import Text
 from config import *
-import pygame as pg
 class MainMenu(Scene):
     def __init__(self, game):
         self.game = game
+    
+    def inilialize(self):
         self.UI = [
             Button(
                 self.game,
@@ -79,7 +80,7 @@ class MainMenu(Scene):
         self._play_game()
     
     def _quit(self):
-        pg.quit()
+        self.game.pg.quit()
         exit()
 
     def draw(self):
@@ -87,11 +88,11 @@ class MainMenu(Scene):
             ui.draw()
 
     def events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in self.game.pg.event.get():
+            if event.type == self.game.pg.QUIT:
                 self._quit()
             
-            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == self.game.pg.MOUSEBUTTONDOWN and event.button == 1:
                 for ui in self.UI:
                     if ui.mouse_collide(): ui.callback()
     

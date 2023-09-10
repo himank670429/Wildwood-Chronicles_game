@@ -7,6 +7,7 @@ from Scene.MainMenu import MainMenu
 from Scene.SettingsMenu import SettingsMenu
 from Scene.GameScene import GameScene
 from Modules.Map import Map
+from UI.Text import Text
 
 class Game:
     def __init__(self):
@@ -26,19 +27,23 @@ class Game:
             'Sound' : False,
             'Pause' : False
         }
+        self.pg = pg
         self.walls = pg.sprite.Group()
         self.map = Map(self)
-        
         self.scenes = {
             "MainMenu" : MainMenu(self),
             "SettingsMenu" : SettingsMenu(self),
             "GameScene" : GameScene(self)
         }
         
-        self.scene_manager = SceneManager(self, self.scenes["GameScene"])
+        self.scene_manager = SceneManager(self, self.scenes["MainMenu"])
+
+    def initialize(self):
+        self.scene_manager.initialize_scene()
 
     def run(self):
         self.running = True
+        self.initialize()
         while self.running:
             self.dt = self.clock.tick(FPS)/1000.0
             self.events()
@@ -53,8 +58,8 @@ class Game:
         self.scene_manager.draw_scene()
     
     def update(self):
+        pg.display.flip()
         self.scene_manager.update_scene()
-        pg.display.update()
 
 
 if __name__ == "__main__":
